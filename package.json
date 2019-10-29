@@ -50,6 +50,20 @@
           "type": "boolean",
           "default": false,
           "description": "Sort files for deterministic sort. Enabling this may negatively affect performance"
+        },
+        "betterSearch.ignorecase": {
+          "type": [
+            "boolean"
+          ],
+          "default": false,
+          "description": "Ignore case of a search query"
+        },
+        "betterSearch.smartcase": {
+          "type": [
+            "boolean"
+          ],
+          "default": false,
+          "description": "Ignore case ONLY if no upper-case letters are present in a search query. Overrides 'betterSearch.ignorecase' property"
         }
       }
     },
@@ -98,7 +112,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "yarn run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node out/test/runTests.js"
   },
   "devDependencies": {
     "@types/chai": "^4.2.3",

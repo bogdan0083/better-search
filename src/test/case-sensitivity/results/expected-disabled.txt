@@ -1,0 +1,34 @@
+Search Query: foo
+Containing Folder: better-search/doc/case-sensitivity
+Total Results: 6
+Total Files: 2
+
+File: foo-lowercase.js
+1   var express = require('express');
+2   
+3   var foo = express();
+4   
+5   foo.get('/', function(req, res){
+6     res.send('Hello World');
+7   });
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+9   /* istanbul ignore next */
+10   if (!module.parent) {
+11     foo.listen(3000);
+12     console.log('Express started on port 3000');
+13   }
+
+File: foo-uppercase.js
+1   var express = require('express');
+2   
+3   var Foo = express();
+4   
+5   foO.get('/', function(req, res){
+6     res.send('Hello World');
+7   });
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+9   /* istanbul ignore next */
+10   if (!module.parent) {
+11     FOO.listen(3000);
+12     console.log('Express started on port 3000');
+13   }

@@ -1,0 +1,11 @@
+Search Query: Foo
+Containing Folder: better-search/doc/case-sensitivity
+Total Results: 1
+Total Files: 1
+
+File: foo-uppercase.js
+1   var express = require('express');
+2   
+3   var Foo = express();
+4   
+5   foO.get('/', function(req, res){

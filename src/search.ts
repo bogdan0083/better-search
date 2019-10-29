@@ -4,12 +4,15 @@ import * as execa from "execa";
 const MatchRegex = /(.+?):(\d+):(\d+):(.*)/;
 const ContextRegex = /(.+?)-(\d+)-(.*)/;
 
+
 export interface SearchOptions {
   query: string;
   queryRegex: boolean;
   location: string;
   context: number;
   sortFiles: string;
+  ignorecase: string;
+  smartcase: string;
 }
 
 export interface SearchResult {
@@ -91,7 +94,13 @@ export async function runSearch(
     command.push("--sort-files");
   }
 
-  console.log(command);
+  if (opts.ignorecase === "true") {
+    command.push("--ignore-case");
+  }
+
+  if (opts.smartcase === "true") {
+    command.push("--smart-case");
+  } 
 
   try {
     const {stdout} = await execa(

@@ -9,14 +9,14 @@ function sluggify(inputString: string): string {
 }
 
 function buildUri(searchOptions: SearchOptions): vscode.Uri {
-  const { query, queryRegex, location, context, sortFiles } = searchOptions;
+  const { query, queryRegex, location, context, sortFiles, ignorecase, smartcase } = searchOptions;
   // Need a nonce so we can refresh our results without hitting cache
   const date = Date.now();
   const queryRegexStr = queryRegex ? 'y' : 'n';
   return vscode.Uri.parse(
     `${BetterSearchProvider.scheme}:Σ: ${sluggify(
       query
-    )}?query=${query}&queryRegex=${queryRegexStr}&location=${location}&context=${context}&sortFiles=${sortFiles}&date=${date}`
+    )}?query=${query}&queryRegex=${queryRegexStr}&location=${location}&context=${context}&sortFiles=${sortFiles}&date=${date}&ignorecase=${ignorecase}&smartcase=${smartcase}`
   );
 }
 
@@ -115,7 +115,13 @@ export async function search(
       context: vscode.workspace.getConfiguration("betterSearch").context,
       sortFiles: vscode.workspace
         .getConfiguration("betterSearch")
-        .sortFiles.toString()
+        .sortFiles.toString(),
+      ignorecase: vscode.workspace
+        .getConfiguration("betterSearch")
+        .ignorecase.toString(),
+      smartcase: vscode.workspace
+        .getConfiguration("betterSearch")
+        .smartcase.toString(),
     },
     partialOpts
   );

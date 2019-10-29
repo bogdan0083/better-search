@@ -26,6 +26,8 @@ There's also `betterSearch.searchFull` if you'd like to run a search with more c
 
 - `betterSearch.context`: Number of context lines to show around search results. Default: 2
 - `betterSearch.sortFiles`: Sort files for deterministic sort. Enabling this limits the search to 1 thread and will negatively impact performance.
+- `betterSearch.ignorecase`: Ignore case of a search query.
+- `betterSearch.smartcase`: Ignore case ONLY if no upper-case letters are present in a search query. Overrides 'betterSearch.ignorecase' property.
 
 ## Attributions
 

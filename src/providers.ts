@@ -18,6 +18,7 @@ import {
   languages
 } from "vscode";
 import * as search from "./search";
+import { hasCapitalLetters } from "./utils";
 
 const LANGUAGE_EXTENSIONS: { [lang: string]: string } = {
   ts: "typescript",
@@ -132,6 +133,21 @@ export class BetterSearchProvider
     }
 
     return match;
+  }
+
+  /**
+   * Check if we should ignore case on search 
+   */
+  private shouldIgnoreCase({ ignorecase, smartcase, query }: search.SearchOptions): boolean {
+    if (smartcase === "true" && hasCapitalLetters(query)) {
+      return false;
+    } else if (smartcase === "true" && !hasCapitalLetters(query)) {
+      return false;
+    } else if (ignorecase === "true") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private renderSeparator(state: RenderState): string {
@@ -264,11 +280,11 @@ Total Files: ${Object.keys(files).length}\n`;
     ) as unknown) as search.SearchOptions;
     opts.queryRegex = opts.queryRegex as any === 'y';
     const uriString = uri.toString();
-
     this._links[uriString] = [];
     this._highlights[uriString] = [];
     this._queries[uriString] = opts.query as string;
-    this._queryRegexes[uriString] = new RegExp(`(${opts.query})`, 'g');
+    const regexFlags = 'g' + (this.shouldIgnoreCase(opts) ? 'i' : '');
+    this._queryRegexes[uriString] = new RegExp(`(${opts.query})`, regexFlags);
 
     const results = await search.runSearch(opts);
     const language = await this.detectLanguage(results);
